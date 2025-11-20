@@ -1,0 +1,31 @@
+---
+title: "JSON vs JSONB in PostgreSQL"
+publishedAt: "2025-11-13"
+summary: "Understanding the key differences between JSON and JSONB data types in PostgreSQL and when to use which."
+---
+
+PostgreSQL offers two types for storing JSON data: `json` and `jsonb`. While they both accept valid JSON input, they differ significantly in how they store and process that data.
+
+## The JSON Data Type
+
+The `json` data type stores an exact copy of the input text. This means:
+- It preserves whitespace
+- It preserves the order of keys
+- It preserves duplicate keys
+
+It is essentially a text field with JSON validation.
+
+## The JSONB Data Type
+
+The `jsonb` (JSON Binary) data type stores data in a decomposed binary format. This means:
+- It does not preserve whitespace
+- It does not preserve the order of keys
+- It does not preserve duplicate keys (last value wins)
+
+## Performance
+
+`jsonb` is generally preferred because it supports indexing and is faster to process. However, `json` is slightly faster to ingest since it doesn't require parsing overhead.
+
+## Conclusion
+
+For most use cases, especially where you need to query the JSON data, **use `jsonb`**. Use `json` only if you need to preserve the exact input format (like for legacy systems).
